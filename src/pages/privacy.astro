@@ -1,0 +1,22 @@
+---
+import SimplePage from '../components/SimplePage.astro';
+import { site } from '../data/site';
+const c = site.contact;
+const officer = site.privacy.informationOfficer;
+// TODO(launch): Phase 5 — full POPIA notice reviewed by Wikus before launch.
+---
+<SimplePage title={`Privacy notice | ${site.name}`} description={`How ${site.name} handles personal information under POPIA.`} heading="Privacy notice" noindex={false}>
+  <p>{site.legalName} respects your privacy and processes personal information in line with the Protection of Personal Information Act, 2013 (POPIA).</p>
+  <h2>What we collect</h2>
+  <p>When you send an enquiry we receive your name, company, email address, phone number, budget range, campaign start and the billboard you're interested in.</p>
+  <h2>Why we use it</h2>
+  <p>Only to reply to your enquiry and prepare a quote. We don't sell your details or add you to marketing lists without asking.</p>
+  <h2>Who processes it</h2>
+  <p>Enquiries are delivered by email through Resend and the website is hosted on Vercel. Website visits are measured with Vercel Web Analytics, which uses no cookies.</p>
+  <h2>How long we keep it</h2>
+  <p>We keep enquiries only as long as needed to deal with them and any resulting booking, or as the law requires.</p>
+  <h2>Your rights</h2>
+  <p>You may ask to see, correct or delete your personal information, or object to how we use it. You may also complain to the Information Regulator (inforegulator.org.za).</p>
+  <h2>Contact</h2>
+  <p>Information Officer: {officer || site.name}, <a href={`mailto:${c.email}`}>{c.email}</a>, <a href={c.phoneHref}>{c.phoneDisplay}</a>.</p>
+</SimplePage>

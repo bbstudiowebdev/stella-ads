@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import Stats from '../components/Stats.astro';
+import Billboards from '../components/Billboards.astro';
+import ComingSoon from '../components/ComingSoon.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import WhyStella from '../components/WhyStella.astro';
+import Vision from '../components/Vision.astro';
+import Quote from '../components/Quote.astro';
+import Footer from '../components/Footer.astro';
+import MobileBar from '../components/MobileBar.astro';
+---
+<BaseLayout schema>
+  <Nav />
+  <main id="main">
+    <Hero />
+    <Stats />
+    <Billboards />
+    <ComingSoon />
+    <HowItWorks />
+    <WhyStella />
+    <Vision />
+    <Quote />
+  </main>
+  <Footer />
+  <MobileBar />
+</BaseLayout>

@@ -1,0 +1,8 @@
+---
+import SimplePage from '../components/SimplePage.astro';
+import { site } from '../data/site';
+---
+<SimplePage title={`Page not found | ${site.name}`} heading="Page not found">
+  <p>That page doesn't exist. Browse our billboard sites or get a quote instead.</p>
+  <a class="btn-primary" href="/#billboards">See billboards</a>
+</SimplePage>

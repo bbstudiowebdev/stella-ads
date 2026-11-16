@@ -1,0 +1,101 @@
+---
+import { site } from '../data/site';
+const t = site.quote;
+const f = t.fields;
+const c = site.contact;
+---
+<section id="quote" class="band" aria-labelledby="quote-title">
+  <div class="inner">
+    <div>
+      <p class="eyebrow">{t.eyebrow}</p>
+      <h2 id="quote-title">{t.h2}</h2>
+      <p class="body">{t.body}</p>
+      <ul class="contact">
+        <li><a href={c.phoneHref} class="phone">{c.phoneDisplay}</a></li>
+        <li><a href={`mailto:${c.email}`}>{c.email}</a></li>
+        <li><a href={c.whatsappHref} target="_blank" rel="noopener">{t.whatsappLabel}<span class="visually-hidden"> (opens WhatsApp)</span></a></li>
+        <li class="area">{c.area}</li>
+      </ul>
+    </div>
+
+    <form class="form" method="post" action="/api/contact" data-quote-form>
+      <label>{f.name}<input name="name" autocomplete="name" required maxlength="120" /></label>
+      <label>{f.company}<input name="company" autocomplete="organization" maxlength="160" /></label>
+      <label>{f.email}<input name="email" type="email" autocomplete="email" required maxlength="200" data-email aria-describedby="email-error" /></label>
+      <label>{f.phone}<input name="phone" type="tel" autocomplete="tel" maxlength="40" /></label>
+      <label>{f.budget}<select name="budget">{t.budgetOptions.map((o) => <option>{o}</option>)}</select></label>
+      <label>{f.start}<select name="start">{t.startOptions.map((o) => <option>{o}</option>)}</select></label>
+      <label class="full">{f.board}
+        <select name="board" data-board>
+          <option value="">{t.anyBoard}</option>
+          {site.boards.map((b) => <option value={b.name}>{b.name}</option>)}
+        </select>
+      </label>
+      <div class="hp" aria-hidden="true">
+        <label>Leave this field empty<input name="website" tabindex="-1" autocomplete="off" /></label>
+      </div>
+      <p id="email-error" class="error full" role="alert" data-error hidden>{t.emailError}</p>
+      <button type="submit" class="submit full" data-submit data-label={t.submit} data-label-for={t.submitFor}>{t.submit}</button>
+      <p class="note full">{t.privacyNote} <a href="/privacy">Privacy notice</a></p>
+    </form>
+  </div>
+</section>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-quote-form]');
+  if (form) {
+    const board = form.querySelector<HTMLSelectElement>('[data-board]')!;
+    const submit = form.querySelector<HTMLButtonElement>('[data-submit]')!;
+    const email = form.querySelector<HTMLInputElement>('[data-email]')!;
+    const error = form.querySelector<HTMLElement>('[data-error]')!;
+    const label = () => { submit.textContent = board.value ? (submit.dataset.labelFor ?? '') + board.value : (submit.dataset.label ?? ''); };
+    board.addEventListener('change', label);
+
+    // Any "Enquire" / "Get a quote" link pre-selects its board (or clears it).
+    document.addEventListener('click', (e) => {
+      const a = (e.target as Element).closest<HTMLElement>('[data-enquire]');
+      if (!a) return;
+      board.value = a.dataset.enquire ?? '';
+      label();
+    });
+
+    form.noValidate = true;
+    email.addEventListener('input', () => { error.hidden = true; email.removeAttribute('aria-invalid'); });
+    form.addEventListener('submit', (e) => {
+      if (!/\S+@\S+\.\S+/.test(email.value)) {
+        e.preventDefault(); error.hidden = false; email.setAttribute('aria-invalid', 'true'); email.focus(); return;
+      }
+      const name = form.querySelector<HTMLInputElement>('input[name="name"]')!;
+      if (!name.value.trim()) { e.preventDefault(); name.focus(); name.reportValidity(); return; }
+      submit.disabled = true; submit.textContent = 'Sending…';
+    });
+  }
+</script>
+
+<style>
+  .band { background: var(--c-dark); color: #fff; }
+  .inner { max-width: var(--container); margin: 0 auto; padding: var(--band-pad) var(--gutter); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: 56px; }
+  .eyebrow { margin: 0; font-size: 13px; font-weight: 700; letter-spacing: 0.08em; color: var(--c-accent); text-transform: uppercase; }
+  h2 { margin: 14px 0 0; font-size: var(--fs-h2-xl); font-weight: 800; line-height: 1.02; letter-spacing: -0.01em; }
+  .body { font-size: 17px; color: var(--c-muted-dark-2); margin: 18px 0 0; line-height: 1.6; max-width: 440px; }
+  .contact { list-style: none; margin: 36px 0 0; padding: 0; display: flex; flex-direction: column; gap: 14px; font-size: 16px; }
+  .contact a { color: #fff; text-decoration: none; transition: color var(--t-fast); }
+  .contact a:hover { color: var(--c-accent); }
+  .contact .phone { font-size: 24px; font-weight: 700; }
+  .area { color: var(--c-muted-dark-2); }
+
+  .form { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px; align-content: start; }
+  label { display: flex; flex-direction: column; gap: 8px; font-size: 14px; font-weight: 600; color: var(--c-muted-dark-2); }
+  .full { grid-column: 1 / -1; }
+  input, select { background: var(--c-dark-2); border: 1px solid var(--c-line-dark-3); border-radius: var(--r-chip); padding: 14px 16px; color: #fff; font-size: 16px; outline: none; min-height: 48px; transition: border-color var(--t-fast), box-shadow var(--t-fast); }
+  input:focus, select:focus { border-color: var(--c-accent); box-shadow: 0 0 0 3px var(--c-accent-glow); }
+  input[aria-invalid='true'] { border-color: var(--c-error); }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .error { margin: 0; font-size: 14px; color: var(--c-error); }
+  .error[hidden] { display: none; }
+  .submit { background: var(--c-accent); color: var(--c-dark); font-weight: 700; font-size: 16px; padding: 17px; border: 0; border-radius: var(--r-btn); text-align: center; cursor: pointer; transition: background var(--t-fast); }
+  .submit:hover { background: var(--c-accent-hover); }
+  .submit:disabled { opacity: 0.7; cursor: progress; }
+  .note { margin: 0; font-size: 13px; color: var(--c-muted-dark); }
+  .note a { color: var(--c-muted-dark-2); }
+</style>

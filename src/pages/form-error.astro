@@ -1,0 +1,15 @@
+---
+import SimplePage from '../components/SimplePage.astro';
+import { site } from '../data/site';
+const t = site.formError;
+const c = site.contact;
+---
+<SimplePage title={`${t.h1} | ${site.name}`} heading={t.h1}>
+  <p>{t.body}</p>
+  <ul>
+    <li><a href={c.phoneHref}>{c.phoneDisplay}</a></li>
+    <li><a href={c.whatsappHref} target="_blank" rel="noopener">{site.quote.whatsappLabel}</a></li>
+    <li><a href={`mailto:${c.email}`}>{c.email}</a></li>
+  </ul>
+  <a class="btn-primary" href="/#quote">{t.back}</a>
+</SimplePage>

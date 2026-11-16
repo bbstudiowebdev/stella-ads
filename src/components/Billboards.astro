@@ -1,0 +1,115 @@
+---
+import { Image } from 'astro:assets';
+import { site } from '../data/site';
+import BoardCard from './BoardCard.astro';
+
+const t = site.billboards;
+// Featured = an "Available now" board with the highest traffic (design logic).
+const trafficNum = (s: string) => parseFloat(s) || 0;
+const featured = site.boards
+  .filter((b) => b.available && b.availability === 'Available now')
+  .sort((a, b) => trafficNum(b.traffic) - trafficNum(a.traffic))[0];
+const boards = site.boards.filter((b) => b !== featured);
+---
+<section id="billboards" class="section" aria-labelledby="billboards-title">
+  <div class="head">
+    <div>
+      <h2 id="billboards-title" class="h2">{t.h2}</h2>
+      <p class="intro">{t.intro}</p>
+    </div>
+    <div class="filters" role="group" aria-label="Filter by city" data-filters hidden>
+      {t.filters.map((c, i) => (
+        <button type="button" class:list={['chip', { on: i === 0 }]} data-city={c} aria-pressed={i === 0 ? 'true' : 'false'}>{c}</button>
+      ))}
+    </div>
+  </div>
+
+  {featured && (
+    <article class="featured" data-board-card data-city={featured.city} aria-labelledby="featured-name">
+      <div class="f-media">
+        {featured.photos[0] && <Image src={featured.photos[0].src} alt={featured.photos[0].alt} widths={[640, 960]} sizes="(max-width: 900px) 100vw, 620px" loading="lazy" />}
+        <span class="badge">{t.featuredBadge}</span>
+      </div>
+      <div class="f-body">
+        <p class="f-city">{featured.city}</p>
+        <h3 id="featured-name">{featured.name}</h3>
+        <dl class="f-facts">
+          <div><dt>Daily traffic</dt><dd>{featured.traffic || t.trafficFallback}</dd></div>
+          <div><dt>Per month, {t.vatNote}</dt><dd>{featured.price || t.priceFallback}</dd></div>
+        </dl>
+        <div><a href="#quote" class="btn-primary" data-enquire={featured.name}>{t.enquire}</a></div>
+      </div>
+    </article>
+  )}
+
+  <div class="grid">
+    {boards.map((b) => <BoardCard board={b} />)}
+  </div>
+  <p class="empty" data-empty hidden>{t.empty}</p>
+</section>
+
+<script>
+  // City filter (progressive enhancement: without JS all boards show).
+  const filters = document.querySelector<HTMLElement>('[data-filters]');
+  if (filters) {
+    filters.hidden = false;
+    const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-board-card]'));
+    const empty = document.querySelector<HTMLElement>('[data-empty]');
+    filters.addEventListener('click', (e) => {
+      const btn = (e.target as Element).closest<HTMLButtonElement>('[data-city]');
+      if (!btn) return;
+      const city = btn.dataset.city;
+      filters.querySelectorAll('button').forEach((b) => { const on = b === btn; b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); });
+      let shown = 0;
+      cards.forEach((c) => { const show = city === 'All' || c.dataset.city === city; c.hidden = !show; if (show) shown++; });
+      if (empty) empty.hidden = shown > 0;
+    });
+  }
+
+  // Photo carousels.
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((root) => {
+    const track = root.querySelector<HTMLElement>('[data-track]');
+    const dots = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-dot]'));
+    const slides = track ? Array.from(track.children) as HTMLElement[] : [];
+    const n = slides.length;
+    if (!track || n < 2) return;
+    let cur = 0;
+    const go = (k: number) => {
+      cur = (k + n) % n;
+      track.style.transform = `translateX(-${(cur * 100) / n}%)`;
+      dots.forEach((d, i) => { d.classList.toggle('on', i === cur); if (i === cur) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current'); });
+      slides.forEach((s, i) => { if (i === cur) s.removeAttribute('aria-hidden'); else s.setAttribute('aria-hidden', 'true'); });
+    };
+    root.querySelector('[data-prev]')?.addEventListener('click', () => go(cur - 1));
+    root.querySelector('[data-next]')?.addEventListener('click', () => go(cur + 1));
+    dots.forEach((d, i) => d.addEventListener('click', () => go(i)));
+  });
+</script>
+
+<style>
+  .section { max-width: var(--container); margin: 0 auto; padding: 96px var(--gutter) 0; }
+  .head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 32px; }
+  .intro { margin: 10px 0 0; font-size: 16px; color: var(--c-muted); }
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; }
+  .filters[hidden] { display: none; }
+  .chip { font-size: 14px; font-weight: 600; padding: 0 16px; min-height: var(--touch); display: flex; align-items: center; border-radius: var(--r-chip); cursor: pointer; background: var(--c-surface); color: var(--c-ink); border: 1px solid var(--c-line-2); transition: all var(--t-fast); }
+  .chip.on, .chip:global(.on) { background: var(--c-ink); color: #fff; border-color: var(--c-ink); }
+
+  .featured { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); background: var(--c-dark); color: #fff; border-radius: var(--r-panel); overflow: hidden; margin-bottom: 20px; }
+  .featured[hidden] { display: none; }
+  .f-media { position: relative; min-height: 320px; }
+  .f-media :global(img) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .badge { position: absolute; top: 16px; left: 16px; background: var(--c-accent); color: var(--c-dark); font-size: 13px; font-weight: 700; padding: 6px 12px; border-radius: 6px; }
+  .f-body { padding: clamp(28px, 4vw, 48px); display: flex; flex-direction: column; justify-content: center; gap: 12px; }
+  .f-city { margin: 0; font-size: 14px; color: var(--c-muted-dark); }
+  .f-body h3 { margin: 0; font-size: clamp(30px, 3.4vw, 40px); font-weight: 800; line-height: 1.05; letter-spacing: -0.01em; }
+  .f-facts { display: flex; flex-wrap: wrap; gap: 32px; margin: 12px 0 0; padding-top: 20px; border-top: 1px solid var(--c-line-dark-2); }
+  .f-facts > div { display: flex; flex-direction: column-reverse; justify-content: flex-end; }
+  .f-facts dd { margin: 0; font-size: 20px; font-weight: 700; }
+  .f-facts dt { font-size: 13px; color: var(--c-muted-dark); margin-top: 2px; }
+  .f-body .btn-primary { margin-top: 16px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 20px; }
+  .empty { margin: 0; padding: 48px; text-align: center; color: var(--c-muted); font-size: 16px; background: var(--c-surface); border: 1px solid var(--c-line); border-radius: var(--r-card); }
+  .empty[hidden] { display: none; }
+</style>

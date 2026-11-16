@@ -1,0 +1,18 @@
+---
+import { site } from '../data/site';
+---
+<section class="stats" aria-label="Key facts">
+  <dl class="grid">
+    {site.stats.map((s) => (
+      <div><dt class="label">{s.label}</dt><dd class="value">{s.value}</dd></div>
+    ))}
+  </dl>
+</section>
+
+<style>
+  .stats { background: var(--c-dark); color: #fff; border-top: 1px solid var(--c-line-dark); }
+  .grid { margin: 0 auto; max-width: var(--container); padding: 32px var(--gutter); display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 24px; }
+  .grid > div { display: flex; flex-direction: column-reverse; justify-content: flex-end; }
+  .value { margin: 0; font-size: 40px; font-weight: 800; line-height: 1; }
+  .label { font-size: 14px; color: var(--c-muted-dark-2); margin-top: 6px; }
+</style>

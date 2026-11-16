@@ -1,0 +1,22 @@
+---
+import { site } from '../data/site';
+---
+<footer class="footer">
+  <div class="inner">
+    <p><span class="wm">Stella<span>Ads</span></span> · © {site.year} {site.legalName}</p>
+    <nav aria-label="Footer">
+      {site.footer.links.map((l) => <a href={l.href}>{l.label}</a>)}
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .footer { background: var(--c-dark); color: var(--c-muted-dark); border-top: 1px solid var(--c-line-dark); }
+  .inner { max-width: var(--container); margin: 0 auto; padding: 28px var(--gutter); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; font-size: 14px; }
+  p { margin: 0; }
+  .wm { color: #fff; font-weight: 800; }
+  .wm span { color: var(--c-accent); }
+  nav { display: flex; gap: 24px; }
+  a { color: var(--c-muted-dark); text-decoration: none; padding: 12px 0; }
+  a:hover { color: #fff; }
+</style>

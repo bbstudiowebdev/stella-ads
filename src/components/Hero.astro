@@ -1,0 +1,159 @@
+---
+import { getImage } from 'astro:assets';
+import { site } from '../data/site';
+
+// Board data for the globe (photos optimised by Astro instead of base64 in the design).
+const globeBoards = await Promise.all(
+  site.boards.map(async (b) => {
+    const p = b.photos[0];
+    const img = p ? await getImage({ src: p.src, width: 800, format: 'webp' }) : null;
+    return {
+      slug: b.slug, name: b.name, city: b.city, lat: b.lat, lon: b.lon,
+      traffic: b.traffic || site.billboards.trafficFallback,
+      price: b.price ? `${b.price} ${site.billboards.vatNote}` : site.billboards.priceFallback,
+      availability: b.availability, available: b.available,
+      photo: img?.src ?? '', photoAlt: p?.alt ?? '',
+    };
+  }),
+);
+const globeData = { boards: globeBoards, cities: site.hero.cities, views: site.hero.views };
+---
+<section id="top" class="hero" aria-labelledby="hero-title" data-hero>
+  <div class="stage" data-stage role="img" aria-label={site.hero.globeLabel}></div>
+  <div class="labels" data-labels aria-hidden="true"><div class="tip" data-tip></div></div>
+  <div class="loader" data-loader aria-hidden="true">{site.hero.loading}</div>
+
+  <div class="copy" data-copy>
+    <h1 id="hero-title">{site.hero.h1}</h1>
+    <p>{site.hero.lead}</p>
+    <div class="ctas">
+      <a class="btn" href="#quote" data-enquire="">{site.hero.ctaQuote}</a>
+      <a class="link" href="#billboards">{site.hero.ctaBrowse}</a>
+    </div>
+  </div>
+
+  <div class="dock" data-dock>
+    <div class="chips" data-chips role="group" aria-label="Map view">
+      {site.hero.views.map((v, i) => (
+        <button type="button" class:list={['chip', { on: i === 0 }]} data-view={v.id} aria-pressed={i === 0 ? 'true' : 'false'}>{v.label}</button>
+      ))}
+    </div>
+    <div class="meta">
+      <span class="lg"><span class="dot"></span>Available</span>
+      <span class="lg"><span class="dot off"></span>Occupied</span>
+      <span class="hint">{site.hero.hint}</span>
+    </div>
+  </div>
+
+  <aside class="panel" data-panel aria-hidden="true" aria-labelledby="pName" inert>
+    <div class="photo">
+      <span data-p="photoEmpty">drone photo</span>
+      <img data-p="photo" alt="" hidden />
+      <button type="button" class="close" data-p="close" aria-label="Close details">×</button>
+    </div>
+    <div class="pbody">
+      <div class="status"><span class="dot" data-p="dot"></span><span data-p="status"></span></div>
+      <h2 id="pName" data-p="name"></h2>
+      <div class="muted" data-p="city"></div>
+      <dl class="facts">
+        <div class="fact"><dt>Daily traffic</dt><dd data-p="traffic"></dd></div>
+        <div class="fact"><dt>Rental</dt><dd data-p="price"></dd></div>
+        <div class="fact wide"><dt>GPS</dt><dd data-p="gps"></dd></div>
+      </dl>
+      <a class="btn" href="#quote" data-p="quote" data-enquire="">Request a quote</a>
+      <div class="pnav"><button type="button" data-p="prev">← Previous site</button><button type="button" data-p="next">Next site →</button></div>
+    </div>
+  </aside>
+
+  <script type="application/json" data-globe-data set:html={JSON.stringify(globeData)} />
+</section>
+
+<script>
+  // Load the globe after first paint so the <h1> stays the LCP element.
+  const hero = document.querySelector<HTMLElement>('[data-hero]');
+  const hasWebGL = (() => {
+    try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch { return false; }
+  })();
+  if (hero && hasWebGL) {
+    const start = () => import('../scripts/globe').then((m) => m.initGlobe(hero)).catch((err) => {
+      console.warn('Globe failed to load', err);
+      hero.classList.add('globe-failed');
+    });
+    if ('requestIdleCallback' in window) requestIdleCallback(start, { timeout: 1500 });
+    else setTimeout(start, 200);
+  } else hero?.classList.add('globe-failed');
+</script>
+
+<style>
+  .hero { position: relative; background: var(--c-hero); color: #fff; height: min(88vh, 860px); min-height: 600px; overflow: hidden; }
+  .stage { position: absolute; inset: 0; cursor: grab; touch-action: none; }
+  .stage:global(.dragging) { cursor: grabbing; }
+  .stage:global(.hovering) { cursor: pointer; }
+  .stage :global(canvas) { display: block; }
+
+  .copy { position: absolute; left: clamp(20px, 5vw, 64px); top: calc(50% - 40px); transform: translateY(-50%); max-width: min(520px, 42vw); display: flex; flex-direction: column; gap: 22px; pointer-events: none; transition: opacity 400ms, transform 400ms; }
+  .copy:global(.hide) { opacity: 0; transform: translateY(-50%) translateX(-24px); }
+  h1 { margin: 0; font-size: clamp(40px, 5.2vw, 68px); font-weight: 800; line-height: 1.02; letter-spacing: -0.01em; text-wrap: balance; }
+  .copy p { margin: 0; font-size: clamp(17px, 1.5vw, 20px); color: var(--c-hero-text); line-height: 1.5; }
+  .ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 28px; pointer-events: auto; }
+  .btn { background: var(--c-accent); color: var(--c-dark); border: 0; font-weight: 700; font-size: 16px; padding: 16px 28px; border-radius: var(--r-btn); cursor: pointer; text-decoration: none; transition: background var(--t-fast), transform var(--t-fast); }
+  .btn:hover { background: var(--c-accent-hover); color: var(--c-dark); transform: translateY(-1px); }
+  .link { background: none; border: 0; color: #fff; font-weight: 600; font-size: 16px; padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.4); text-decoration: none; transition: border-color var(--t-fast); }
+  .link:hover { color: #fff; border-color: var(--c-accent); }
+
+  .dock { position: absolute; left: clamp(20px, 5vw, 64px); right: clamp(20px, 5vw, 64px); bottom: clamp(20px, 4vh, 36px); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; pointer-events: none; transition: opacity 300ms; }
+  .dock:global(.shift) { right: calc(min(400px, 100% - 32px) + 40px); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; pointer-events: auto; visibility: hidden; }
+  .hero:global(.globe-ready) .chips { visibility: visible; }
+  .chip { min-height: var(--touch); padding: 0 16px; border-radius: var(--r-chip); border: 1px solid #333735; background: #141716; color: var(--c-hero-text); font-size: 14px; font-weight: 600; cursor: pointer; white-space: nowrap; transition: all var(--t-fast); }
+  .chip:hover { border-color: #6b6e6c; color: #fff; }
+  .chip:global(.on) { background: #fff; color: var(--c-dark); border-color: #fff; }
+  .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 20px; font-size: 13px; color: var(--c-muted-dark); }
+  .lg { display: flex; align-items: center; gap: 7px; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--c-accent); display: inline-block; }
+  .dot.off, .dot:global(.off) { background: #8a8d8b; }
+  .hero:global(.globe-failed) .hint { display: none; }
+
+  .labels { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+  .labels :global(.city) { position: absolute; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #9fb3a9; transform: translate(-50%, -50%); white-space: nowrap; transition: opacity 200ms; }
+  .tip { position: absolute; transform: translate(-50%, calc(-100% - 14px)); background: #fff; color: var(--c-dark); font-size: 13px; font-weight: 700; padding: 7px 10px; border-radius: 7px; white-space: nowrap; opacity: 0; transition: opacity 120ms; }
+  .tip:global(.show) { opacity: 1; }
+
+  .panel { position: absolute; top: 16px; right: 16px; bottom: 16px; width: min(400px, calc(100% - 32px)); background: #121514; border: 1px solid #262a28; border-radius: var(--r-panel); display: flex; flex-direction: column; overflow: hidden; transform: translateX(calc(100% + 24px)); transition: transform 480ms cubic-bezier(.2, .8, .2, 1); }
+  .panel:global(.open) { transform: none; }
+  .photo { position: relative; aspect-ratio: 16 / 10; max-height: 42%; background: #1c201e; display: flex; align-items: center; justify-content: center; font-family: ui-monospace, monospace; font-size: 12px; color: #8a8d8b; flex: none; }
+  .photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: center; background: var(--c-dark); }
+  .photo img[hidden] { display: none; }
+  .close { position: absolute; z-index: 1; top: 12px; right: 12px; width: var(--touch); height: var(--touch); border-radius: var(--r-btn); border: 0; background: var(--c-dark); color: #fff; font-size: 22px; line-height: 1; cursor: pointer; }
+  .close:hover { background: #262a28; }
+  .pbody { padding: 24px; display: flex; flex-direction: column; gap: 6px; overflow-y: auto; flex: 1; }
+  .pbody > * { flex: none; }
+  .status { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--c-hero-text); }
+  .pbody h2 { margin: 10px 0 0; font-size: 30px; font-weight: 800; line-height: 1.05; letter-spacing: -0.01em; }
+  .muted { font-size: 15px; color: var(--c-muted-dark); }
+  .facts { margin: 18px 0 4px; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: #262a28; border: 1px solid #262a28; border-radius: 12px; overflow: hidden; }
+  .fact { background: #121514; padding: 14px; }
+  .fact dt { font-size: 12.5px; color: #9a9d9b; }
+  .fact dd { margin: 4px 0 0; font-size: 17px; font-weight: 700; }
+  .fact.wide { grid-column: 1 / -1; }
+  .pbody .btn { margin-top: auto; text-align: center; }
+  .pnav { display: flex; justify-content: space-between; gap: 10px; margin-top: 12px; }
+  .pnav button { flex: 1; min-height: var(--touch); border-radius: var(--r-chip); border: 1px solid #333735; background: transparent; color: var(--c-hero-text); font-size: 14px; font-weight: 600; cursor: pointer; }
+  .pnav button:hover { border-color: #6b6e6c; color: #fff; }
+
+  .loader { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: #6b6e6c; pointer-events: none; transition: opacity 400ms; }
+  .hero:global(.globe-failed) .loader { opacity: 0; }
+
+  @media (max-width: 760px) {
+    .copy { top: 24px; transform: none; max-width: none; right: 20px; gap: 14px; }
+    .copy:global(.hide) { transform: translateY(-12px); }
+    h1 { font-size: 34px; }
+    .copy p { font-size: 16px; }
+    .btn { padding: 14px 22px; }
+    .hint { display: none; }
+    .dock:global(.shift) { opacity: 0; pointer-events: none; }
+    .panel { top: auto; left: 0; right: 0; bottom: 0; width: 100%; height: 64%; border-radius: 18px 18px 0 0; transform: translateY(105%); }
+    .photo { aspect-ratio: auto; height: 200px; }
+    .pbody h2 { font-size: 24px; }
+  }
+</style>

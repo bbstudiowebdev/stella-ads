@@ -1,0 +1,27 @@
+---
+import { Image } from 'astro:assets';
+import { site } from '../data/site';
+const t = site.vision;
+---
+<section id="vision" class="band" aria-labelledby="vision-title">
+  <div class="inner">
+    <div class="media">
+      <Image src={t.image.src} alt={t.image.alt} widths={[400, 600, 750]} sizes="(max-width: 760px) 100vw, 580px" loading="lazy" />
+    </div>
+    <div class="text">
+      <p class="eyebrow">{t.eyebrow}</p>
+      <h2 id="vision-title" class="h2">{t.h2}</h2>
+      <p class="body">{t.body}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .band { background: var(--c-surface); border-top: 1px solid var(--c-line); }
+  .inner { max-width: var(--container); margin: 0 auto; padding: var(--band-pad) var(--gutter); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 48px; align-items: center; }
+  .media { position: relative; aspect-ratio: 4 / 3; border-radius: var(--r-panel); overflow: hidden; background: #000; }
+  .media :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .text { display: flex; flex-direction: column; gap: 18px; }
+  .eyebrow { margin: 0; font-size: 16px; font-weight: 700; color: var(--c-accent-deep); }
+  .body { margin: 0; font-size: 17px; color: var(--c-muted); line-height: 1.65; max-width: 520px; }
+</style>

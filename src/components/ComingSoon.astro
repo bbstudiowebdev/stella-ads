@@ -1,0 +1,35 @@
+---
+import { site } from '../data/site';
+const t = site.comingSoon;
+---
+<section id="coming-soon" class="section" aria-labelledby="coming-title">
+  <div class="panel">
+    <div class="text">
+      <span class="badge"><span class="dot" aria-hidden="true"></span>{t.badge}</span>
+      <h2 id="coming-title">{t.h2}</h2>
+      <p>{t.body}</p>
+      <div><a href="#quote" class="btn-primary cta" data-enquire="">{t.cta}</a></div>
+    </div>
+    <ul class="slots">
+      {t.slots.map((s) => (
+        <li><span class="tag">{s.tag}</span><span class="name">{s.name}</span><span class="note">{s.note}</span></li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .section { max-width: var(--container); margin: 0 auto; padding: 64px var(--gutter) 0; }
+  .panel { background: var(--c-dark); color: #fff; border-radius: var(--r-panel); padding: clamp(28px, 4vw, 48px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 36px; align-items: center; }
+  .text { display: flex; flex-direction: column; gap: 14px; }
+  .badge { display: inline-flex; align-self: flex-start; align-items: center; gap: 8px; background: var(--c-accent-soft); color: var(--c-accent); font-size: 13px; font-weight: 700; padding: 6px 12px; border-radius: var(--r-pill); }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--c-accent); }
+  h2 { margin: 0; font-size: var(--fs-h2-sm); font-weight: 800; letter-spacing: -0.01em; line-height: 1.08; text-wrap: balance; }
+  p { margin: 0; font-size: 16px; color: var(--c-muted-dark-2); line-height: 1.6; max-width: 440px; }
+  .cta { margin-top: 8px; padding: 14px 22px; }
+  .slots { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+  .slots li { border: 1.5px dashed var(--c-line-dark-4); border-radius: 12px; padding: 22px 18px; display: flex; flex-direction: column; gap: 6px; }
+  .tag { font-size: 13px; font-weight: 700; color: var(--c-accent); }
+  .name { font-size: 16px; font-weight: 700; }
+  .note { font-size: 13px; color: var(--c-muted-dark); }
+</style>

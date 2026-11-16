@@ -1,0 +1,23 @@
+---
+import { site } from '../data/site';
+const t = site.mobileBar;
+---
+<div class="spacer" aria-hidden="true"></div>
+<nav class="bar" aria-label="Quick contact">
+  <a href={site.contact.phoneHref} class="ghost">{t.call}</a>
+  <a href={site.contact.whatsappHref} class="ghost" target="_blank" rel="noopener">{t.whatsapp}</a>
+  <a href="/#quote" class="primary" data-enquire="">{t.quote}</a>
+</nav>
+
+<style>
+  .spacer, .bar { display: none; }
+  @media (max-width: 767.98px) {
+    .spacer { display: block; height: 76px; background: var(--c-dark); }
+    .bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; display: grid; grid-template-columns: 1fr 1fr 1.4fr; gap: 10px; padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); background: var(--c-dark); border-top: 1px solid var(--c-line-dark-2); }
+    a { min-height: 48px; display: flex; align-items: center; justify-content: center; border-radius: var(--r-btn); font-weight: 700; font-size: 16px; text-decoration: none; }
+    .ghost { border: 1px solid var(--c-line-dark-5); color: #fff; }
+    .ghost:hover { color: #fff; border-color: var(--c-muted-dark); }
+    .primary { background: var(--c-accent); color: var(--c-dark); }
+    .primary:hover { color: var(--c-dark); background: var(--c-accent-hover); }
+  }
+</style>

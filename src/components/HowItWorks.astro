@@ -1,0 +1,26 @@
+---
+import { site } from '../data/site';
+const t = site.how;
+---
+<section id="how" class="section" aria-labelledby="how-title">
+  <h2 id="how-title" class="h2">{t.h2}</h2>
+  <ol class="steps">
+    {t.steps.map((s) => (
+      <li>
+        <span class="n" aria-hidden="true">{s.n}</span>
+        <h3>{s.title}</h3>
+        <p>{s.body}</p>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<style>
+  .section { max-width: var(--container); margin: 0 auto; padding: 112px var(--gutter) 0; }
+  .h2 { margin-bottom: 40px; }
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 40px; }
+  li { border-top: 2px solid var(--c-ink); padding-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+  .n { font-size: 40px; font-weight: 800; color: var(--c-accent-deep); line-height: 1; }
+  h3 { margin: 8px 0 0; font-size: 20px; font-weight: 700; }
+  p { margin: 0; font-size: 16px; color: var(--c-muted); line-height: 1.6; }
+</style>

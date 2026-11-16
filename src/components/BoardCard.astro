@@ -1,0 +1,70 @@
+---
+import { Image } from 'astro:assets';
+import type { Board } from '../data/site';
+import { site } from '../data/site';
+
+interface Props { board: Board }
+const { board: b } = Astro.props;
+const t = site.billboards;
+const multi = b.photos.length > 1;
+---
+<article class="card" data-board-card data-city={b.city} aria-labelledby={`b-${b.slug}`}>
+  <div class="media" data-carousel>
+    <div class="track" data-track style={`width:${b.photos.length * 100}%`}>
+      {b.photos.map((p, i) => (
+        <div class="slide" aria-hidden={i > 0 ? 'true' : undefined}>
+          <Image src={p.src} alt={p.alt} widths={[400, 640, 800]} sizes="(max-width: 640px) 100vw, 400px" loading="lazy" style={p.position ? `object-position:${p.position}` : undefined} />
+        </div>
+      ))}
+    </div>
+    {multi && (
+      <>
+        <button type="button" class="arrow prev" data-prev aria-label={`Previous photo of ${b.name}`}>‹</button>
+        <button type="button" class="arrow next" data-next aria-label={`Next photo of ${b.name}`}>›</button>
+        <div class="dots">
+          {b.photos.map((_, i) => (
+            <button type="button" class:list={['d', { on: i === 0 }]} data-dot={i} aria-label={`Photo ${i + 1} of ${b.photos.length}`} aria-current={i === 0 ? 'true' : undefined}></button>
+          ))}
+        </div>
+      </>
+    )}
+  </div>
+  <div class="body">
+    <h3 id={`b-${b.slug}`}>{b.name}</h3>
+    <p class="sub">{b.city} · {b.traffic || t.trafficFallback}</p>
+    <div class="row">
+      <p class="price">{b.price || t.priceFallback}{b.price && <span class="vat"> {t.vatNote}</span>}</p>
+      <p class="avail"><span class:list={['dot', { off: !b.available }]} aria-hidden="true"></span>{b.availability}</p>
+    </div>
+    <a href="#quote" class="enquire" data-enquire={b.name}>{t.enquire}<span class="visually-hidden">: {b.name}</span></a>
+  </div>
+</article>
+
+<style>
+  .card { background: var(--c-surface); border: 1px solid var(--c-line); border-radius: var(--r-card); overflow: hidden; display: flex; flex-direction: column; transition: transform 180ms, border-color 180ms; }
+  .card:hover { transform: translateY(-2px); border-color: var(--c-line-hover); }
+  .card[hidden] { display: none; }
+  .media { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: var(--c-line); }
+  .track { display: flex; height: 100%; transition: transform 380ms cubic-bezier(.2, .8, .2, 1); }
+  .slide { position: relative; flex: 1 1 0; min-width: 0; height: 100%; }
+  .slide :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .arrow { position: absolute; top: 50%; transform: translateY(-50%); width: var(--touch); height: var(--touch); border-radius: 50%; border: 0; background: var(--c-overlay); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; transition: background var(--t-fast); }
+  .arrow:hover { background: var(--c-dark); }
+  .prev { left: 10px; }
+  .next { right: 10px; }
+  .dots { position: absolute; left: 50%; bottom: 10px; transform: translateX(-50%); display: flex; gap: 6px; padding: 5px 8px; border-radius: var(--r-pill); background: var(--c-overlay-soft); }
+  .d { width: 7px; height: 7px; padding: 0; border: 0; border-radius: 50%; cursor: pointer; background: rgba(255, 255, 255, 0.45); }
+  .d.on, .d:global(.on) { background: #fff; }
+  .body { padding: 20px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
+  h3 { margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.005em; line-height: 1.2; }
+  .sub { margin: 0; font-size: 14px; color: var(--c-muted); }
+  .row { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; }
+  .price { margin: 0; font-size: 18px; font-weight: 700; }
+  .vat { font-size: 12px; font-weight: 600; color: var(--c-muted); }
+  .avail { margin: 0; display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 600; color: var(--c-ink); }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--c-accent); }
+  .dot.off { background: var(--c-occupied); }
+  .enquire { margin-top: auto; border: 1px solid var(--c-line-2); text-align: center; font-size: 15px; font-weight: 600; min-height: 46px; display: flex; align-items: center; justify-content: center; border-radius: var(--r-chip); color: var(--c-ink); text-decoration: none; transition: all var(--t-fast); }
+  .body > .row + .enquire { margin-top: 18px; }
+  .enquire:hover { border-color: var(--c-ink); background: var(--c-ink); color: #fff; }
+</style>

@@ -1,0 +1,30 @@
+---
+import { site } from '../data/site';
+const t = site.why;
+---
+<section id="why" class="section" aria-labelledby="why-title">
+  <div class="cols">
+    <div class="sticky">
+      <h2 id="why-title" class="h2">{t.h2}</h2>
+      <p class="body">{t.body}</p>
+    </div>
+    <ul class="reasons">
+      {t.reasons.map((r) => (
+        <li><h3>{r.title}</h3><p>{r.body}</p></li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .section { max-width: var(--container); margin: 0 auto; padding: 112px var(--gutter); }
+  .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 48px; align-items: start; }
+  .sticky { position: sticky; top: 100px; }
+  .h2 { margin-bottom: 16px; }
+  .body { margin: 0; font-size: 17px; color: var(--c-muted); line-height: 1.65; max-width: 440px; }
+  .reasons { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; border-top: 1px solid var(--c-line-2); }
+  li { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 8px 24px; padding: 24px 0; border-bottom: 1px solid var(--c-line-2); }
+  h3 { margin: 0; font-size: 20px; font-weight: 700; }
+  li p { margin: 0; font-size: 16px; color: var(--c-muted); line-height: 1.55; }
+  @media (max-width: 767.98px) { .sticky { position: static; } }
+</style>

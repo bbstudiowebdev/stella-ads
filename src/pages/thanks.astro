@@ -1,0 +1,9 @@
+---
+import SimplePage from '../components/SimplePage.astro';
+import { site } from '../data/site';
+const t = site.thanks;
+---
+<SimplePage title={`${t.h1} | ${site.name}`} heading={t.h1} accent>
+  <p>{t.body}</p>
+  <a class="btn-primary" href="/">{t.back}</a>
+</SimplePage>
