@@ -8,7 +8,7 @@ Tick boxes as phases finish. One commit per phase; `npm run build` must pass fir
 - [x] CLAUDE.md, DESIGN.md, BUILD_PLAN.md, CLIENT_QUESTIONS.md, `site.ts`
 - [x] Every section scaffolded as its own component in page order (styled from tokens, globe ported)
 - [x] `npm run check` + `npm run build` pass
-- [ ] Pushed to GitHub `bbstudiowebdev/stella-ads`
+- [x] Pushed to GitHub `bbstudiowebdev/stella-ads`
 
 **Done when:** a build of the full page structure is on GitHub.
 
