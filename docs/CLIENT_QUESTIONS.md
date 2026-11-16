@@ -4,7 +4,7 @@ All answered by Wikus on 2026-11-16. Add new questions below as Q13, Q14… and 
 
 | # | Question | Answer (2026-11-16) | Where applied |
 |---|---|---|---|
-| Q1 | Registered company name? | Stella Ads (Pty) Ltd. No reg number shown. | Footer, privacy, JSON-LD |
+| Q1 | Registered company name? | Stella Ads CC (updated from "(Pty) Ltd" same day). No reg number shown. | Footer, privacy, JSON-LD |
 | Q2 | Business address? | Gauteng only, no street address. | Contact area line, JSON-LD region |
 | Q3 | Office hours? | Don't show hours. | — |
 | Q4 | Stats accurate (from R 7,000/mo, one invoice, ~5 days install)? | Yes. | Stats band |

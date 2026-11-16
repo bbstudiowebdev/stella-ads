@@ -71,7 +71,7 @@ League Spartan, weights 400–800. Body 16 px.
 8. **Why Stella** `#why`: two columns; left sticky (top 100) h2 + body 17; right list of reasons with 1 px dividers (title 20/700 + body).
 9. **Our vision** `#vision` (white band, top border): image 4/3 radius 16 left; right eyebrow "Our vision" (green deep, 16/700), h2, body 17.
 10. **Quote** `#quote` (dark): left eyebrow, h2 (64), body, phone (24/700), email, area. Right: form grid `auto-fit minmax(200px,1fr)` gap 18: Full name, Company, Email, Phone, Monthly budget (select), Campaign start (select), Billboard of interest (full width select, "Any site" + boards), error line, full-width green submit (17 px padding). Submit label becomes "Request quote for {board}" when a board is chosen. Inputs: #181919, border #333534, radius 9, padding 14×16, focus border green + 3 px green glow. Success state → "Enquiry received" panel (becomes `/thanks`).
-11. **Footer** (dark, top border): wordmark · "© 2026 Stella Ads (Pty) Ltd" left; Billboards / Contact links right.
+11. **Footer** (dark, top border): wordmark · "© 2026 Stella Ads CC" left; Billboards / Contact links right.
 12. **Mobile sticky bar** (< 768): fixed bottom, Call (outline) + Get a quote (green), 48 px buttons, 76 px spacer above.
 
 ## Responsive rules

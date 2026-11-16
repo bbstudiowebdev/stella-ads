@@ -63,4 +63,5 @@ Tick boxes as phases finish. One commit per phase; `npm run build` must pass fir
 | 2026-11-16 | Prices exclude VAT: small "excl. VAT" after card prices, featured label "Per month, excl. VAT", stat label "Starting price per month, excl. VAT", step 2 copy changed from "VAT included" to "excluding VAT". | Client: prices excl. VAT (Q6); design copy was wrong. |
 | 2026-11-16 | Form posts to `/api/contact` and redirects to `/thanks` (the design's "Enquiry received" panel). Every Enquire / Get a quote link jumps to `#quote` and (with JS) pre-selects its board in the form. | Works with JS off. |
 | 2026-11-16 | Globe stops rendering while the hero is off-screen. | Battery/CPU on phones; no visual change. |
+| 2026-11-16 | Legal name changed from "Stella Ads (Pty) Ltd" (design) to "Stella Ads CC" in footer, privacy page and JSON-LD. | Client: registered as a CC. |
 | 2026-11-16 | Added a `/privacy` link in the footer. | POPIA requires a privacy notice for the form. |
