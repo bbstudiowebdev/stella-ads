@@ -85,7 +85,7 @@ const globeData = { boards: globeBoards, cities: site.hero.cities, views: site.h
 </script>
 
 <style>
-  .hero { position: relative; background: var(--c-hero); color: #fff; height: min(88vh, 860px); min-height: 600px; overflow: hidden; }
+  .hero { position: relative; background: var(--c-hero); color: #fff; height: min(88vh, 860px); min-height: 600px; overflow: hidden; container-type: size; }
   .stage { position: absolute; inset: 0; cursor: grab; touch-action: none; }
   .stage:global(.dragging) { cursor: grabbing; }
   .stage:global(.hovering) { cursor: pointer; }
@@ -101,7 +101,7 @@ const globeData = { boards: globeBoards, cities: site.hero.cities, views: site.h
   .link { background: none; border: 0; color: #fff; font-weight: 600; font-size: 16px; padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.4); text-decoration: none; transition: border-color var(--t-fast); }
   .link:hover { color: #fff; border-color: var(--c-accent); }
 
-  .dock { position: absolute; left: clamp(20px, 5vw, 64px); right: clamp(20px, 5vw, 64px); bottom: clamp(20px, 4vh, 36px); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; pointer-events: none; transition: opacity 300ms; }
+  .dock { position: absolute; left: clamp(20px, 5vw, 64px); right: clamp(20px, 5vw, 64px); bottom: clamp(20px, 4cqh, 36px); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; pointer-events: none; transition: opacity 300ms; }
   .dock:global(.shift) { right: calc(min(400px, 100% - 32px) + 40px); }
   .chips { display: flex; flex-wrap: wrap; gap: 8px; pointer-events: auto; visibility: hidden; }
   .hero:global(.globe-ready) .chips { visibility: visible; }

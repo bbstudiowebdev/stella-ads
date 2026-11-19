@@ -87,7 +87,7 @@ const c = site.contact;
   .form { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px; align-content: start; }
   label { display: flex; flex-direction: column; gap: 8px; font-size: 14px; font-weight: 600; color: var(--c-muted-dark-2); }
   .full { grid-column: 1 / -1; }
-  input, select { background: var(--c-dark-2); border: 1px solid var(--c-line-dark-3); border-radius: var(--r-chip); padding: 14px 16px; color: #fff; font-size: 16px; outline: none; min-height: 48px; transition: border-color var(--t-fast), box-shadow var(--t-fast); }
+  input, select { background: var(--c-dark-2); border: 1px solid var(--c-line-dark-3); border-radius: var(--r-chip); padding: 14px 16px; color: #fff; font-size: 16px; outline: none; transition: border-color var(--t-fast), box-shadow var(--t-fast); }
   input:focus, select:focus { border-color: var(--c-accent); box-shadow: 0 0 0 3px var(--c-accent-glow); }
   input[aria-invalid='true'] { border-color: var(--c-error); }
   .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
@@ -98,4 +98,7 @@ const c = site.contact;
   .submit:disabled { opacity: 0.7; cursor: progress; }
   .note { margin: 0; font-size: 13px; color: var(--c-muted-dark); }
   .note a { color: var(--c-muted-dark-2); }
+  @media (max-width: 767px) {
+    input, select { min-height: 48px; }
+  }
 </style>

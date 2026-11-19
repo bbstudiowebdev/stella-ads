@@ -108,7 +108,7 @@ export const site = {
 
   billboards: {
     h2: 'Find your next site',
-    intro: 'Available sites first. Traffic data and site stats available on request.',
+    intro: 'Available sites first. Prices exclude VAT; traffic data and site stats on request.',
     filters: ['All', 'Pretoria', 'Centurion'] as const,
     enquire: 'Enquire about this site',
     featuredBadge: 'Featured · Available now',
@@ -145,7 +145,7 @@ export const site = {
       available: false,
       photos: [
         { src: olievenWest, alt: 'Olievenhoutbosh West billboard beside the road, Centurion' },
-        { src: olievenEast, alt: 'Second view of the Olievenhoutbosh billboard, Centurion', position: '50% 41%' },
+        { src: olievenEast, alt: 'Second view of the Olievenhoutbosh billboard, Centurion', position: '50% 14%' },
       ],
     },
     {
@@ -159,7 +159,7 @@ export const site = {
       availability: 'Occupied',
       available: false,
       photos: [
-        { src: olievenEast, alt: 'Olievenhoutbosh East billboard on a pole beside the road, Centurion', position: '50% 41%' },
+        { src: olievenEast, alt: 'Olievenhoutbosh East billboard on a pole beside the road, Centurion', position: '50% 14%' },
         { src: olievenWest, alt: 'Second view of the Olievenhoutbosh billboard, Centurion' },
       ],
     },

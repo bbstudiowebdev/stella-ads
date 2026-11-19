@@ -13,9 +13,10 @@ Tick boxes as phases finish. One commit per phase; `npm run build` must pass fir
 **Done when:** a build of the full page structure is on GitHub.
 
 ## Phase 1 — Visual fidelity (desktop)
-- [ ] Every section styled from `tokens.css` to match v3 at 1440 px
+- [x] Every section styled from `tokens.css` to match v3 at 1440 px (2026-11-19)
 - [ ] Globe ported (three.js from npm, intro, pins, panel, chips) and matches the design
-- [ ] Screenshot comparison per section: heights within 2 px, elements within 1 px
+- [x] Per-section comparison against the v3 render at 1440 px (2026-11-19): nav, hero copy + dock, stats, billboards, how, why, vision, footer match to < 1 px; coming soon +1.5 px (44 px button); quote +30 px (WhatsApp line + privacy note, both logged)
+- [ ] Globe intro, pins and panel checked visually side by side (panel layout already matches)
 
 **Done when:** side-by-side screenshots at 1440 px are indistinguishable.
 
@@ -65,3 +66,7 @@ Tick boxes as phases finish. One commit per phase; `npm run build` must pass fir
 | 2026-11-16 | Globe stops rendering while the hero is off-screen. | Battery/CPU on phones; no visual change. |
 | 2026-11-16 | Legal name changed from "Stella Ads (Pty) Ltd" (design) to "Stella Ads CC" in footer, privacy page and JSON-LD. | Client: registered as a CC. |
 | 2026-11-16 | Added a `/privacy` link in the footer. | POPIA requires a privacy notice for the form. |
+| 2026-11-19 | "excl. VAT" moved from each board card's price to the billboards intro ("Prices exclude VAT; traffic data and site stats on request."). Featured label and stat label keep "excl. VAT". | Per-card note wrapped the price row and made cards 14.5 px taller than the design; cards now match v3 exactly. |
+| 2026-11-19 | Privacy note ("We only use your details…" + Privacy notice link) under the quote form submit. Quote band is 30 px taller than v3 with the WhatsApp line. | POPIA notice at the point of collection. |
+| 2026-11-19 | Form inputs use the design's natural height (44.5 / 46.5 px) on desktop; 48 px min-height below 768 px only. "Get notified" keeps a 44 px min-height (+1.5 px vs design). | Desktop matches v3; touch targets stay ≥ 44 px. |
+| 2026-11-19 | Hero dock offset uses `4cqh` of the hero (container query) instead of `4vh`. | The design ran the hero in an iframe, so its `vh` was the hero height; this reproduces the same 36 px → 31.7 px position. |

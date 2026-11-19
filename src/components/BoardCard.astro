@@ -33,7 +33,7 @@ const multi = b.photos.length > 1;
     <h3 id={`b-${b.slug}`}>{b.name}</h3>
     <p class="sub">{b.city} · {b.traffic || t.trafficFallback}</p>
     <div class="row">
-      <p class="price">{b.price || t.priceFallback}{b.price && <span class="vat"> {t.vatNote}</span>}</p>
+      <p class="price">{b.price || t.priceFallback}</p>
       <p class="avail"><span class:list={['dot', { off: !b.available }]} aria-hidden="true"></span>{b.availability}</p>
     </div>
     <a href="#quote" class="enquire" data-enquire={b.name}>{t.enquire}<span class="visually-hidden">: {b.name}</span></a>
@@ -60,11 +60,10 @@ const multi = b.photos.length > 1;
   .sub { margin: 0; font-size: 14px; color: var(--c-muted); }
   .row { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; }
   .price { margin: 0; font-size: 18px; font-weight: 700; }
-  .vat { font-size: 12px; font-weight: 600; color: var(--c-muted); }
   .avail { margin: 0; display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 600; color: var(--c-ink); }
   .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--c-accent); }
   .dot.off { background: var(--c-occupied); }
-  .enquire { margin-top: auto; border: 1px solid var(--c-line-2); text-align: center; font-size: 15px; font-weight: 600; min-height: 46px; display: flex; align-items: center; justify-content: center; border-radius: var(--r-chip); color: var(--c-ink); text-decoration: none; transition: all var(--t-fast); }
-  .body > .row + .enquire { margin-top: 18px; }
+  .enquire { margin-top: auto; border: 1px solid var(--c-line-2); text-align: center; font-size: 15px; font-weight: 600; min-height: 48px; display: flex; align-items: center; justify-content: center; border-radius: var(--r-chip); color: var(--c-ink); text-decoration: none; transition: all var(--t-fast); }
+  .body > .row { margin-bottom: 18px; }
   .enquire:hover { border-color: var(--c-ink); background: var(--c-ink); color: #fff; }
 </style>
