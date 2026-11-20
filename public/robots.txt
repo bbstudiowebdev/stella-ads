@@ -24,4 +24,4 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
-Sitemap: https://stellaads.co.za/sitemap-index.xml
+Sitemap: https://www.stellaads.co.za/sitemap-index.xml

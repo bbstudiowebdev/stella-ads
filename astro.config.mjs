@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 
 // Primary host. Must match site.url in src/data/site.ts and public/robots.txt.
 // TODO(launch): confirm apex vs www once the domain is connected in Vercel.
-const SITE = 'https://stellaads.co.za';
+const SITE = 'https://www.stellaads.co.za';
 
 export default defineConfig({
   site: SITE,

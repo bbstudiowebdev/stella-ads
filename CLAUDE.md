@@ -5,7 +5,7 @@ One-page marketing site for **Stella Ads**, a billboard advertising business in 
 - **Goal:** advertisers request a billboard quote (form → email to info@stellaads.co.za), or call / WhatsApp +27 79 692 1727.
 - **Audience:** SA business owners and marketing managers, mostly on phones.
 - **Locale:** en-ZA, Rand prices with "R 7,000" spacing as in the design.
-- **Domain:** stellaads.co.za (Wikus controls DNS). Hosting: Vercel. Repo: `bbstudiowebdev/stella-ads`.
+- **Domain:** www.stellaads.co.za is the primary host; stellaads.co.za 308-redirects to it (Wikus controls DNS). Hosting: Vercel. Repo: `bbstudiowebdev/stella-ads`.
 
 ## Commands
 

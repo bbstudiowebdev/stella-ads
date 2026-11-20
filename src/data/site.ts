@@ -42,7 +42,7 @@ const WHATSAPP_NUMBER = '27796921727';
 export const site = {
   name: 'Stella Ads',
   legalName: 'Stella Ads CC',
-  url: 'https://stellaads.co.za', // must match astro.config.mjs `site` and public/robots.txt
+  url: 'https://www.stellaads.co.za', // must match astro.config.mjs `site` and public/robots.txt
   locale: 'en-ZA',
   lang: 'en',
   year: 2026,

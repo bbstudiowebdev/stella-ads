@@ -40,7 +40,7 @@ Tick boxes as phases finish. One commit per phase; `npm run build` must pass fir
 
 ## Phase 6 — QA and launch
 - [ ] Lighthouse mobile ≥ 95 ×4, axe 0 violations, keyboard pass, real devices
-- [ ] DNS for stellaads.co.za → Vercel, one primary host, canonical matches
+- [ ] DNS for stellaads.co.za → Vercel, one primary host (www), canonical matches
 - [ ] Search Console + Bing sitemap submitted; client sign-off
 
 ## Backlog
@@ -70,3 +70,4 @@ Tick boxes as phases finish. One commit per phase; `npm run build` must pass fir
 | 2026-11-19 | Privacy note ("We only use your details…" + Privacy notice link) under the quote form submit. Quote band is 30 px taller than v3 with the WhatsApp line. | POPIA notice at the point of collection. |
 | 2026-11-19 | Form inputs use the design's natural height (44.5 / 46.5 px) on desktop; 48 px min-height below 768 px only. "Get notified" keeps a 44 px min-height (+1.5 px vs design). | Desktop matches v3; touch targets stay ≥ 44 px. |
 | 2026-11-19 | Hero dock offset uses `4cqh` of the hero (container query) instead of `4vh`. | The design ran the hero in an iframe, so its `vh` was the hero height; this reproduces the same 36 px → 31.7 px position. |
+| 2026-11-20 | Primary host is `https://www.stellaads.co.za`; the apex 308-redirects to www (set in Vercel). `site` in astro.config.mjs, `url` in site.ts and the robots.txt sitemap line all use www. | Wikus's choice; www works as a CNAME to Vercel, and canonical, sitemap and schema must match the host that serves the site. |
