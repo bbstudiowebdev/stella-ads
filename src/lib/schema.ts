@@ -21,7 +21,7 @@ export function buildSchema() {
     additionalType: 'https://en.wikipedia.org/wiki/Billboard',
     name: site.name,
     legalName: site.legalName,
-    url,
+    url: `${url}/`,
     logo: `${url}/apple-touch-icon.png`,
     image: `${url}/og.jpg`,
     description: site.meta.description,
@@ -51,7 +51,7 @@ export function buildSchema() {
   if (site.sameAs.length) business.sameAs = site.sameAs;
 
   const graph: unknown[] = [
-    { '@type': 'WebSite', '@id': `${url}/#website`, url, name: site.name, inLanguage: site.locale, publisher: { '@id': id } },
+    { '@type': 'WebSite', '@id': `${url}/#website`, url: `${url}/`, name: site.name, inLanguage: site.locale, publisher: { '@id': id } },
     business,
   ];
 
