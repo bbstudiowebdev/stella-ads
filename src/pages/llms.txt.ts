@@ -21,6 +21,7 @@ export const GET: APIRoute = () => {
     '## Why advertisers choose us',
     ...site.why.reasons.map((r) => `- ${r.title}: ${r.body}`),
     '',
+    ...(site.faq.length ? ['## Frequently asked questions', ...site.faq.flatMap((f) => [`### ${f.q}`, f.a, '']), ''] : []),
     '## Contact',
     `- Phone / WhatsApp: ${c.phoneDisplay}`,
     `- Email: ${c.email}`,

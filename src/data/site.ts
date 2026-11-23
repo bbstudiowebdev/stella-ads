@@ -38,6 +38,7 @@ export interface Board {
 }
 
 const WHATSAPP_NUMBER = '27796921727';
+const PHONE_DISPLAY = '+27 79 692 1727';
 
 export const site = {
   name: 'Stella Ads',
@@ -54,7 +55,7 @@ export const site = {
   },
 
   contact: {
-    phoneDisplay: '+27 79 692 1727',
+    phoneDisplay: PHONE_DISPLAY,
     phoneHref: 'tel:+27796921727',
     email: 'info@stellaads.co.za',
     whatsappHref: `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hi Stella Ads, I would like a billboard quote.')}`,
@@ -251,8 +252,42 @@ export const site = {
 
   mobileBar: { call: 'Call', whatsapp: 'WhatsApp', quote: 'Get a quote' },
 
-  /** FAQ for AEO. Answer-first, specifics over adjectives. Not in the design: shown only if Wikus approves (see BUILD_PLAN Backlog). */
-  faq: [] as { q: string; a: string }[],
+  faqSection: {
+    h2: 'Billboard questions, answered',
+    intro: 'Straight answers on price, timing and booking. Anything else, ask us on WhatsApp.',
+  },
+
+  /**
+   * FAQ for AEO (added 2026-11-23, Wikus approved). Answer-first, full entity names so each
+   * answer stands alone when quoted. Confirmed facts only (Q4–Q6); keep prices and sites in
+   * sync with `boards` above. Also feeds FAQPage JSON-LD and /llms.txt.
+   */
+  faq: [
+    {
+      q: 'How much does billboard advertising cost in Pretoria and Centurion?',
+      a: 'Stella Ads billboards start at R 7,000 per month, excluding VAT. The Solomon Mahlangu Southbound site in Pretoria is R 7,000 a month, and the two Olievenhoutbosh sites in Centurion are R 9,000 a month each. The quote covers rental, printing and flighting in one price.',
+    },
+    {
+      q: 'What is included in the price?',
+      a: 'A Stella Ads quote includes the billboard rental, printing of your artwork and installation, billed together on one invoice. Stella Ads also sends photo proof of flighting on the day your campaign goes up. Prices exclude VAT.',
+    },
+    {
+      q: 'How quickly can my billboard go live?',
+      a: 'A Stella Ads billboard typically goes live within 5 days of you approving your artwork. Stella Ads prints and installs the ad, then sends photo proof of flighting.',
+    },
+    {
+      q: 'Where are Stella Ads billboards?',
+      a: 'Stella Ads has billboard sites in Pretoria and Centurion, Gauteng: Solomon Mahlangu Drive southbound in Pretoria, and two sites in Olievenhoutbosh, Centurion. New locations are coming soon.',
+    },
+    {
+      q: 'Can I see traffic figures for a billboard site?',
+      a: `Yes. Traffic data and site stats for every Stella Ads billboard are available on request. Ask in the quote form, or call or WhatsApp ${PHONE_DISPLAY}.`,
+    },
+    {
+      q: 'How do I book a billboard?',
+      a: `Send the quote form on this page, or call or WhatsApp Stella Ads on ${PHONE_DISPLAY}. Stella Ads replies within one business day with availability, pricing and production details.`,
+    },
+  ] as { q: string; a: string }[],
 
   privacy: {
     informationOfficer: 'Wikus',

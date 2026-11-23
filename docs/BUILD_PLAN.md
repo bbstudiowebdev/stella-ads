@@ -45,7 +45,6 @@ Tick boxes as phases finish. One commit per phase; `npm run build` must pass fir
 
 ## Backlog
 - Higher-resolution drone photos for every site (current ones are 537–716 px wide) — client: later
-- FAQ section for AEO (not in design; needs Wikus's approval and answers)
 - Board detail pages (`/billboards/<slug>`) for "[billboard] + [area]" searches once there are more sites
 - Trust bar once real clients agree to be named (Q11)
 
@@ -74,3 +73,4 @@ Tick boxes as phases finish. One commit per phase; `npm run build` must pass fir
 | 2026-11-23 | `public/og.jpg` (1200×630, 89 KB): hero headline, "From R 7,000/mo excl. VAT", Pretoria & Centurion, and the Olievenhoutbosh East photo. Source in `scripts/og/og.html`; regenerate with `node scripts/og/render.mjs` (local Chrome + sharp). | Share previews were empty (og.jpg 404). Copy mirrors `site.ts`; update both together. |
 | 2026-11-23 | Quote-form enquiries go to stellaads.co@gmail.com (`site.contact.formTo`; `CONTACT_TO_EMAIL` in Vercel overrides). info@stellaads.co.za stays the public address. | Wikus's request. |
 | 2026-11-23 | SEO audit (seo-aeo-geo-build skill): `trailingSlash: 'never'` (one URL form for canonical, sitemap, links); stella-ads.vercel.app 308 → www (duplicate host); old WordPress `/bilboards/` → `/#billboards`, `/contact/` → `/#quote` (other old URLs were WP sample content, left to 404); security headers in `vercel.json`; robots.txt named bot groups repeat `Disallow: /api/`, added Claude-User, Perplexity-User, Applebot-Extended; globe panel name is a `<p>`, not an empty `<h2>`; schema homepage URL has the trailing slash like the canonical. | Search engines and AI crawlers see one canonical URL per page; old links keep their value. |
+| 2026-11-23 | Added a FAQ section (6 questions, `Faq.astro`) between Vision and the quote form. Not in the v3 design; styled like "Why Stella" (sticky heading left, ruled rows right), native `<details>` with the first answer open. Answers use only confirmed facts (Q4–Q6). Feeds FAQPage JSON-LD and `/llms.txt`. | Wikus approved. Answer-first passages AI search can quote; FAQPage schema won't show a rich result for this kind of site, but the visible answers are what count. |
