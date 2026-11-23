@@ -66,6 +66,8 @@ export const site = {
     postalCode: '',
     country: 'ZA',
     hours: '',
+    /** Where quote-form enquiries are emailed (not shown on the site). CONTACT_TO_EMAIL in Vercel overrides it. */
+    formTo: 'stellaads.co@gmail.com',
   },
 
   /** Social / directory profiles for JSON-LD sameAs. */

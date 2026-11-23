@@ -2,7 +2,7 @@
 
 One-page marketing site for **Stella Ads**, a billboard advertising business in Pretoria and Centurion (Gauteng, South Africa). Built by bb. studio from the Claude Design artifact "Stella Ads Website" (Landing Page v3 + 3D globe hero).
 
-- **Goal:** advertisers request a billboard quote (form → email to info@stellaads.co.za), or call / WhatsApp +27 79 692 1727.
+- **Goal:** advertisers request a billboard quote (form → email to stellaads.co@gmail.com via Resend; info@stellaads.co.za is the public address), or call / WhatsApp +27 79 692 1727.
 - **Audience:** SA business owners and marketing managers, mostly on phones.
 - **Locale:** en-ZA, Rand prices with "R 7,000" spacing as in the design.
 - **Domain:** www.stellaads.co.za is the primary host; stellaads.co.za 308-redirects to it (Wikus controls DNS). Hosting: Vercel. Repo: `bbstudiowebdev/stella-ads`.
