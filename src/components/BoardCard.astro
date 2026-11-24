@@ -55,6 +55,14 @@ const multi = b.photos.length > 1;
   .dots { position: absolute; left: 50%; bottom: 10px; transform: translateX(-50%); display: flex; gap: 6px; padding: 5px 8px; border-radius: var(--r-pill); background: var(--c-overlay-soft); }
   .d { width: 7px; height: 7px; padding: 0; border: 0; border-radius: 50%; cursor: pointer; background: rgba(255, 255, 255, 0.45); }
   .d.on, .d:global(.on) { background: #fff; }
+  @media (max-width: 767.98px) {
+    /* Mobile: 24 px tap area (WCAG 2.5.8) around the same 7 px dot. */
+    .dots { gap: 0; padding: 0 4px; }
+    .d { width: 24px; height: 24px; background: none; display: grid; place-items: center; }
+    .d::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: rgba(255, 255, 255, 0.45); }
+    .d.on, .d:global(.on) { background: none; }
+    .d.on::before, .d:global(.on)::before { background: #fff; }
+  }
   .body { padding: 20px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
   h3 { margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.005em; line-height: 1.2; }
   .sub { margin: 0; font-size: 14px; color: var(--c-muted); }

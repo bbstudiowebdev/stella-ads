@@ -89,6 +89,7 @@ export const site = {
     lead: 'Find it, book it, pay for it all in one place.',
     ctaQuote: 'Get a quote',
     ctaBrowse: 'Browse billboards →',
+    panelCta: 'Request a quote',
     globeLabel: 'Interactive 3D globe showing Stella Ads billboard locations. Drag to rotate, scroll to zoom.',
     loading: 'Loading network',
     hint: 'Drag to rotate · Scroll to zoom · Tap a pin',

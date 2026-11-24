@@ -60,7 +60,7 @@ const globeData = { boards: globeBoards, cities: site.hero.cities, views: site.h
         <div class="fact"><dt>Rental</dt><dd data-p="price"></dd></div>
         <div class="fact wide"><dt>GPS</dt><dd data-p="gps"></dd></div>
       </dl>
-      <a class="btn" href="#quote" data-p="quote" data-enquire="">Request a quote</a>
+      <a class="btn" href="#quote" data-p="quote" data-enquire="">{site.hero.panelCta}</a>
       <div class="pnav"><button type="button" data-p="prev">← Previous site</button><button type="button" data-p="next">Next site →</button></div>
     </div>
   </aside>
@@ -149,7 +149,7 @@ const globeData = { boards: globeBoards, cities: site.hero.cities, views: site.h
     .copy:global(.hide) { transform: translateY(-12px); }
     h1 { font-size: 34px; }
     .copy p { font-size: 16px; }
-    .btn { padding: 14px 22px; }
+    .btn { padding: 14px 22px; display: inline-flex; align-items: center; justify-content: center; min-height: var(--touch); }
     .hint { display: none; }
     .dock:global(.shift) { opacity: 0; pointer-events: none; }
     .panel { top: auto; left: 0; right: 0; bottom: 0; width: 100%; height: 64%; border-radius: 18px 18px 0 0; transform: translateY(105%); }
