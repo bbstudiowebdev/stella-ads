@@ -69,6 +69,9 @@ export const site = {
     hours: '',
     /** Where quote-form enquiries are emailed (not shown on the site). CONTACT_TO_EMAIL in Vercel overrides it. */
     formTo: 'stellaads.co@gmail.com',
+    /** Sender for form emails. Resend's sandbox sender works without a verified domain, but only
+     *  to the Resend account's own email. Set CONTACT_FROM_EMAIL in Vercel once stellaads.co.za is verified. */
+    formFrom: 'Stella Ads website <onboarding@resend.dev>',
   },
 
   /** Social / directory profiles for JSON-LD sameAs. */

@@ -33,7 +33,8 @@ export const POST: APIRoute = async ({ request, redirect, url }) => {
   if (data.board && !allowedBoards.has(data.board)) data.board = '';
 
   const to = CONTACT_TO_EMAIL || site.contact.formTo;
-  if (!RESEND_API_KEY || !to || !CONTACT_FROM_EMAIL) {
+  const from = CONTACT_FROM_EMAIL || site.contact.formFrom;
+  if (!RESEND_API_KEY || !to || !from) {
     console.error('Contact form: Resend env vars missing');
     return redirect('/form-error', 303);
   }
@@ -52,7 +53,7 @@ export const POST: APIRoute = async ({ request, redirect, url }) => {
 
   try {
     const { error } = await new Resend(RESEND_API_KEY).emails.send({
-      from: CONTACT_FROM_EMAIL,
+      from,
       to,
       replyTo: data.email,
       subject: `Billboard enquiry: ${data.board || 'Any site'} — ${data.name}`,
